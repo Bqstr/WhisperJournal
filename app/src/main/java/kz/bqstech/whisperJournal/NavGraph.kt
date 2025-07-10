@@ -40,12 +40,10 @@ fun MainNavGraph(){
             HomeScreen(navController, navigateToHome = navigateToHome,navigateToJournal =navigateToJournal , navigateToSettings =navigateToSettings )
         }
         composable<JournalScreen> {
-            HomeScreen(navController, navigateToHome = navigateToHome,navigateToJournal =navigateToJournal , navigateToSettings =navigateToSettings )
-
+            SearchBarJournalScreen()
         }
         composable<SettingsScreen> {
             HomeScreen(navController, navigateToHome = navigateToHome,navigateToJournal =navigateToJournal , navigateToSettings =navigateToSettings )
-
         }
     }
 

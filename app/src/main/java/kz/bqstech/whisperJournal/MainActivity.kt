@@ -5,7 +5,6 @@ import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -16,6 +15,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawingPadding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -28,6 +28,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import kz.bqstech.whisperJournal.ui.theme.Fonts.baldFontWorkSans
 import kz.bqstech.whisperJournal.ui.theme.WhisperJournalTheme
 import kz.bqstech.whisperJournal.util.Space
 import kz.bqstech.whisperJournal.util.noRippleClick
@@ -38,8 +39,13 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             WhisperJournalTheme {
+                Log.d("dsgkjhjkjlfdgk", "${MaterialTheme.colorScheme.onBackground}     ${Color.Black}")
+
                 val navController = rememberNavController()
                 Scaffold(
+                    topBar ={
+                        MainTopbar()
+                    },
                     modifier = Modifier
                         .fillMaxSize()
                         .safeDrawingPadding()
@@ -102,11 +108,11 @@ fun RowScope.BottomBarItem(painter: Painter, text: String, onCLick: () -> Unit, 
     val color = if (selected) {
         Color.Black
     } else {
-        Color.Black.copy(0.5f)
+        Color.Black.copy(0.2f)
     }
     Box(contentAlignment = Alignment.Center, modifier = Modifier
         .weight(1f)
-        .noRippleClick{
+        .noRippleClick {
             onCLick.invoke()
         }) {
         Column() {
@@ -130,5 +136,11 @@ fun RowScope.BottomBarItem(painter: Painter, text: String, onCLick: () -> Unit, 
     }
 }
 
-
-
+@Composable
+fun MainTopbar() {
+    Box(Modifier
+        .fillMaxWidth()
+        .padding(vertical = 20.dp)) {
+        Text(color =Color.Black,text="Whisper Journal",modifier =Modifier.align(Alignment.Center),fontSize =18.sp, lineHeight = 23.sp, fontFamily = baldFontWorkSans)
+    }
+}
