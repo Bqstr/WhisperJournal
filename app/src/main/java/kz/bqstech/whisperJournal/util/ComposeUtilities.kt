@@ -1,5 +1,7 @@
 package kz.bqstech.whisperJournal.util
 
+import android.content.Context
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
@@ -21,6 +23,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
+import kotlin.time.Duration
 
 
 @Composable
@@ -70,4 +73,9 @@ fun Modifier.noRippleClick(onClick:() ->Unit): Modifier {
     ) {
         onClick.invoke()
     }
+}
+
+
+fun showToast(context: Context,text:String,duration :Int =Toast.LENGTH_SHORT ){
+    Toast.makeText(context, text , duration).show()
 }

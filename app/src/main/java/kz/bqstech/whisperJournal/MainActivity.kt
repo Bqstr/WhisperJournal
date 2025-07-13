@@ -26,20 +26,35 @@ import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.app.ActivityCompat
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import kz.bqstech.whisperJournal.ui.theme.Fonts.baldFontWorkSans
 import kz.bqstech.whisperJournal.ui.theme.WhisperJournalTheme
 import kz.bqstech.whisperJournal.util.Space
 import kz.bqstech.whisperJournal.util.noRippleClick
+import org.koin.android.ext.koin.androidContext
+import org.koin.android.ext.koin.androidLogger
+import org.koin.core.context.GlobalContext.startKoin
+import java.util.jar.Manifest
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
+
         super.onCreate(savedInstanceState)
+
         enableEdgeToEdge()
         setContent {
             WhisperJournalTheme {
                 Log.d("dsgkjhjkjlfdgk", "${MaterialTheme.colorScheme.onBackground}     ${Color.Black}")
+
+                ActivityCompat.requestPermissions(
+                    this,
+                    arrayOf(android.Manifest.permission.RECORD_AUDIO),
+                    1001
+                )//move this to part also where i start recording
+
+
 
                 val navController = rememberNavController()
                 Scaffold(

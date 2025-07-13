@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">WhisperJournal</string>
+    <string name="recording_started">Recording started</string>
 </resources>

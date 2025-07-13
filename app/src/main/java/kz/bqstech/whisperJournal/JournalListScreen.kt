@@ -22,6 +22,7 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -32,32 +33,25 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import kz.bqstech.whisperJournal.ui.theme.Fonts.baldFontWorkSans
 import kz.bqstech.whisperJournal.ui.theme.Fonts.mediumWorkSans
 import kz.bqstech.whisperJournal.ui.theme.Fonts.regularWorkSans
 import kz.bqstech.whisperJournal.ui.theme.GrayText
 import kz.bqstech.whisperJournal.util.Space
+import org.koin.androidx.compose.koinViewModel
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SearchBarJournalScreen() {
-    Log.d("dsgkjhjkjlfdgk", "${MaterialTheme.colorScheme.onBackground}     ${Color.Black}")
-    val journalItems = mapOf<String, List<JournalItem>>(
-        "Today, July 6, 2025" to listOf(
-            JournalItem(
-                0, "name", "text", "time", "duration",
-                TextStatus.IN_PROCESS
-            ),
-            JournalItem(
-                0, "name", "text", "time", "duration",
-                TextStatus.IN_PROCESS
-            )
-        )
-    )
+    val viewModel : JournalListViewModel = koinViewModel()
+    val state by viewModel.state.collectAsState()
+
+    val journalItems =state.journalEntries
+
     Column(Modifier.fillMaxSize().background(MaterialTheme.colorScheme.background)) {
         var text by remember { mutableStateOf("") }
-        text
         Row(
             Modifier
                 .fillMaxWidth()
@@ -76,7 +70,6 @@ fun SearchBarJournalScreen() {
                         modifier = Modifier
                             .align(Alignment.CenterVertically)
                             .padding(
-//                                    top = 12.dp, bottom = 12.dp,
                                 start = 16.dp
                             )
                     )
