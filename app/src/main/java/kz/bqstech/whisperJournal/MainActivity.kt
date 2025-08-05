@@ -33,10 +33,6 @@ import kz.bqstech.whisperJournal.ui.theme.Fonts.baldFontWorkSans
 import kz.bqstech.whisperJournal.ui.theme.WhisperJournalTheme
 import kz.bqstech.whisperJournal.util.Space
 import kz.bqstech.whisperJournal.util.noRippleClick
-import org.koin.android.ext.koin.androidContext
-import org.koin.android.ext.koin.androidLogger
-import org.koin.core.context.GlobalContext.startKoin
-import java.util.jar.Manifest
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

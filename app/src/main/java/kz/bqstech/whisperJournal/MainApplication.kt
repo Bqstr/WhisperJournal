@@ -6,7 +6,7 @@ import kz.bqstech.whisperJournal.di.appModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.androidx.viewmodel.dsl.viewModelOf
-import org.koin.core.context.GlobalContext.startKoin
+import org.koin.core.context.startKoin
 import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.module
 

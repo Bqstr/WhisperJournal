@@ -1,6 +1,11 @@
 package kz.bqstech.whisperJournal
 
+import android.app.Notification
+import android.app.NotificationChannel
+import android.app.NotificationManager
 import android.content.Context
+import android.os.Build
+import androidx.core.content.ContextCompat.getSystemService
 import androidx.lifecycle.ViewModel
 import kz.bqstech.whisperJournal.audio.AudioPlayer
 import kz.bqstech.whisperJournal.recorder.AudioRecorder
@@ -36,6 +41,7 @@ class HomeViewModel(
     fun stopAudioTest() {
         audioPlayer.stop()
     }
+
 
 
 }
