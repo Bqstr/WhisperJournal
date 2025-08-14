@@ -1,6 +1,7 @@
 package kz.bqstech.whisperJournal.di
 
 import android.system.Os.bind
+import androidx.activity.ComponentActivity
 import kz.bqstech.whisperJournal.HomeViewModel
 import kz.bqstech.whisperJournal.JournalListViewModel
 import kz.bqstech.whisperJournal.audio.AndroidAudioPlayer
@@ -24,6 +25,10 @@ val appModule = module {
             audioRecorder = get()
         )
     }
+    viewModel{
+        JournalListViewModel()
+    }
+
     viewModelOf(::JournalListViewModel)
 
 

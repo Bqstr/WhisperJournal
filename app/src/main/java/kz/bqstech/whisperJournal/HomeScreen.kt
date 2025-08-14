@@ -155,20 +155,11 @@ fun HomeScreen(
     val configuration = LocalConfiguration.current
     val screenWidthDp = configuration.screenWidthDp
     val viewModel: HomeViewModel = koinViewModel()
-    Scaffold(Modifier.fillMaxSize(), bottomBar = {
-        MainBottomBar(
-            navHostController,
-            navigateToHome = navigateToHome,
-            navigateToJournal = navigateToJournal,
-            navigateToSettings = navigateToSettings
-        )
-    }) { contentPadding ->
         Box(
             Modifier
                 .fillMaxSize()
-                .padding(contentPadding)
-
-        ) {
+        )
+        {
 
 
             Box(
@@ -206,8 +197,6 @@ fun HomeScreen(
 
                         }
                     }
-
-
                 }
                 else{
                     val backgroundColor = MaterialTheme.colorScheme.background
@@ -283,7 +272,7 @@ fun HomeScreen(
 
             }
         }
-    }
+
 
 
 }

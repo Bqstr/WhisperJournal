@@ -42,6 +42,7 @@ android {
     }
     buildFeatures {
         compose = true
+        viewBinding =true
     }
     composeOptions {
         kotlinCompilerExtensionVersion = "1.5.15"
@@ -122,4 +123,8 @@ dependencies {
 
     //Kotlin Serialization
     implementation(libs.kotlinx.serialization.json)
+
+    implementation ("com.google.android.material:material:1.12.0")
+
+
 }

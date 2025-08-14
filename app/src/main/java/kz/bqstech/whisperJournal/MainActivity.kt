@@ -5,6 +5,7 @@ import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -19,6 +20,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -34,11 +36,12 @@ import kz.bqstech.whisperJournal.ui.theme.WhisperJournalTheme
 import kz.bqstech.whisperJournal.util.Space
 import kz.bqstech.whisperJournal.util.noRippleClick
 
-class MainActivity : ComponentActivity() {
+class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
 
+        val fragmentManager =
         enableEdgeToEdge()
         setContent {
             WhisperJournalTheme {
@@ -71,7 +74,14 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun MainBottomBar(navController: NavHostController, navigateToHome: () -> Unit,navigateToSettings:() ->Unit,navigateToJournal:() ->Unit) {
+fun MainBottomBar(
+    navController: NavHostController,
+    navigateToHome: () -> Unit,
+    navigateToSettings: () -> Unit,
+    navigateToJournal: () -> Unit,
+    currentScreen: String?
+) {
+
 
     Row(
         modifier = Modifier
@@ -79,7 +89,7 @@ fun MainBottomBar(navController: NavHostController, navigateToHome: () -> Unit,n
             .padding(vertical = 8.dp)
     ) {
         Space(16.dp)
-        val currentScreen = when (navController.currentDestination?.route) {
+        val currentScreen = when (currentScreen) {
             HomeScreen::class.java.name -> "HomeScreen"
             JournalScreen::class.java.name -> "JournalScreen"
             SettingsScreen::class.java.name -> "SettingsScreen"

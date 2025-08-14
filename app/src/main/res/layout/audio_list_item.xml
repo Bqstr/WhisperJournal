@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:paddingVertical="16dp"
+    >
+
+    <Space
+        android:layout_width="16dp"
+        android:layout_height="wrap_content"/>
+    <!-- Left Icon Box -->
+    <FrameLayout
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:background="@drawable/bg_rounded_8"
+        android:layout_gravity="center_vertical">
+
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_gravity="center"
+            app:tint="?attr/colorOnBackground"
+            android:src="@drawable/mic_image" />
+    </FrameLayout>
+
+    <!-- Space (16.dp) -->
+    <View
+        android:layout_width="16dp"
+        android:layout_height="match_parent" />
+
+    <!-- Main Text Column -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+
+        <!-- Title -->
+        <TextView
+            android:id="@+id/textTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Item name or text"
+            android:textSize="16sp"
+            android:lineSpacingExtra="0dp"
+            android:lineHeight="24sp"
+            android:textColor="?attr/colorOnBackground"
+            android:fontFamily="@font/worksansmedium" />
+
+        <!-- Time and Duration Row -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/textTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="12:30 PM"
+                android:textSize="14sp"
+                android:lineHeight="21sp"
+                android:textColor="?attr/colorOnSurface"
+                android:fontFamily="@font/worksansregular" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=" · "
+                android:textSize="14sp"
+                android:lineHeight="21sp"
+                android:textColor="?attr/colorOnSurface"
+                android:fontFamily="@font/worksansregular" />
+
+            <TextView
+                android:id="@+id/textDuration"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="3 min"
+                android:textSize="14sp"
+                android:lineHeight="21sp"
+                android:textColor="?attr/colorOnSurface"
+                android:fontFamily="@font/worksansregular" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <!-- Status Dot Container -->
+    <FrameLayout
+
+        android:layout_width="28dp"
+        android:layout_height="28dp"
+        android:layout_gravity="center_vertical"
+        android:paddingEnd="16dp">
+
+        <!-- Dot -->
+        <View
+            android:id="@+id/statusDot"
+            android:layout_width="12dp"
+            android:layout_height="12dp"
+            android:layout_gravity="center"
+            android:background="@drawable/bg_circle_status" />
+    </FrameLayout>
+
+</LinearLayout>

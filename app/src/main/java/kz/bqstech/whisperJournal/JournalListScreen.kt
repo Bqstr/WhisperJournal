@@ -1,6 +1,13 @@
 package kz.bqstech.whisperJournal
 
+import android.app.ListFragment
 import android.util.Log
+import android.view.View
+import android.widget.FrameLayout
+import android.widget.LinearLayout
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.LocalActivity
+import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -21,6 +28,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
+import androidx.compose.material3.contentColorFor
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -30,104 +38,148 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.compose.ui.viewinterop.AndroidView
+import androidx.fragment.app.FragmentContainerView
+import androidx.fragment.app.FragmentManager
 import kz.bqstech.whisperJournal.ui.theme.Fonts.baldFontWorkSans
 import kz.bqstech.whisperJournal.ui.theme.Fonts.mediumWorkSans
 import kz.bqstech.whisperJournal.ui.theme.Fonts.regularWorkSans
 import kz.bqstech.whisperJournal.ui.theme.GrayText
 import kz.bqstech.whisperJournal.util.Space
-import org.koin.androidx.compose.koinViewModel
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SearchBarJournalScreen() {
-    val viewModel : JournalListViewModel = koinViewModel()
-    val state by viewModel.state.collectAsState()
+fun SearchBarJournalScreen(
+) {
+    Log.d("asdfafasdfasdf","1")
 
-    val journalItems =state.journalEntries
+//    val viewModel : JournalListViewModel = koinViewModel()
+//    val state by viewModel.state.collectAsState()
 
-    Column(Modifier.fillMaxSize().background(MaterialTheme.colorScheme.background)) {
-        var text by remember { mutableStateOf("") }
-        Row(
-            Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 16.dp)
-        )
-        {
-            OutlinedTextField(
-                shape =RoundedCornerShape(16.dp),
-                modifier = Modifier
-                    .fillMaxWidth(),
-                leadingIcon = {
-                    Icon(
-                        tint = MaterialTheme.colorScheme.onSurface,
-                        imageVector = Icons.Default.Search,
-                        contentDescription = null,
-                        modifier = Modifier
-                            .align(Alignment.CenterVertically)
-                            .padding(
-                                start = 16.dp
-                            )
-                    )
-                },
-                singleLine = true,
-                colors = OutlinedTextFieldDefaults.colors(
-                    focusedTextColor = MaterialTheme.colorScheme.onBackground,
-                    disabledTextColor = MaterialTheme.colorScheme.onBackground,
-                    unfocusedTextColor = MaterialTheme.colorScheme.onBackground,
-                    focusedBorderColor = Color.Transparent,
-                    errorBorderColor = Color.Transparent,
-                    disabledBorderColor = Color.Transparent,
-                    unfocusedBorderColor = Color.Transparent,
-                    errorContainerColor = MaterialTheme.colorScheme.surface,
-                    focusedContainerColor = MaterialTheme.colorScheme.surface,
-                    disabledContainerColor = MaterialTheme.colorScheme.surface,
-                    unfocusedContainerColor = MaterialTheme.colorScheme.surface
-                ),
-                value = text,
-                onValueChange = {
-                    text = it
-                },
-                label = {
-                },
-                placeholder = {
-                    Text(
-                        text = "Search  your thoughts...",
-                        fontSize = 16.sp,
-                        color = GrayText,
-                        modifier = Modifier.align(
-                            Alignment.CenterVertically
-                        )
-                    )
-                },
-            )
+    Log.d("asdfafasdfasdf","2")
+
+    val activity = LocalActivity.current as AppCompatActivity
+    val fragmentManager = activity.supportFragmentManager // native fragments
+
+
+
+
+
+    Log.d("asdfafasdfasdf",fragmentManager.toString())
+
+
+    Log.d("asdfafasdfasdf","sadf")
+    AndroidView(factory = {context ->
+        FragmentContainerView(context).apply {
+            id = View.generateViewId() // unique ID is required
+            // Add the fragment to this container
+            fragmentManager.beginTransaction()
+                .replace(id, AudioListFragment()) // Replace with your Fragment instance
+                .commit()
         }
-        Space(12.dp)
+    },modifier =Modifier.fillMaxSize())
 
-        LazyColumn(
-            Modifier
-                .fillMaxWidth()
-                .background(MaterialTheme.colorScheme.background)
-                .padding(horizontal = 16.dp)
-        ){
-            journalItems.entries.forEach { (date, items) ->
-                stickyHeader {
-                    DateInJournalList(date)
-                }
-                items(items) { element ->
-                    ItemInJournalList(element)
-                }
-            }
 
-        }
-    }
+
+//    Column(Modifier.fillMaxSize().background(MaterialTheme.colorScheme.background)) {
+//        var text by remember { mutableStateOf("") }
+//        Row(
+//            Modifier
+//                .fillMaxWidth()
+//                .padding(horizontal = 16.dp)
+//        )
+//        {
+//            OutlinedTextField(
+//                shape =RoundedCornerShape(16.dp),
+//                modifier = Modifier
+//                    .fillMaxWidth(),
+//                leadingIcon = {
+//                    Icon(
+//                        tint = MaterialTheme.colorScheme.onSurface,
+//                        imageVector = Icons.Default.Search,
+//                        contentDescription = null,
+//                        modifier = Modifier
+//                            .align(Alignment.CenterVertically)
+//                            .padding(
+//                                start = 16.dp
+//                            )
+//                    )
+//                },
+//                singleLine = true,
+//                colors = OutlinedTextFieldDefaults.colors(
+//                    focusedTextColor = MaterialTheme.colorScheme.onBackground,
+//                    disabledTextColor = MaterialTheme.colorScheme.onBackground,
+//                    unfocusedTextColor = MaterialTheme.colorScheme.onBackground,
+//                    focusedBorderColor = Color.Transparent,
+//                    errorBorderColor = Color.Transparent,
+//                    disabledBorderColor = Color.Transparent,
+//                    unfocusedBorderColor = Color.Transparent,
+//                    errorContainerColor = MaterialTheme.colorScheme.surface,
+//                    focusedContainerColor = MaterialTheme.colorScheme.surface,
+//                    disabledContainerColor = MaterialTheme.colorScheme.surface,
+//                    unfocusedContainerColor = MaterialTheme.colorScheme.surface
+//                ),
+//                value = text,
+//                onValueChange = {
+//                    text = it
+//                },
+//                label = {
+//                },
+//                placeholder = {
+//                    Text(
+//                        text = "Search  your thoughts...",
+//                        fontSize = 16.sp,
+//                        color = GrayText,
+//                        modifier = Modifier.align(
+//                            Alignment.CenterVertically
+//                        )
+//                    )
+//                },
+//            )
+//        }
+//        Space(12.dp)
+//
+//        LazyColumn(
+//            Modifier
+//                .fillMaxWidth()
+//                .background(MaterialTheme.colorScheme.background)
+//                .padding(horizontal = 16.dp)
+//        ){
+//            journalItems.entries.forEach { (date, items) ->
+//                stickyHeader {
+//                    DateInJournalList(date)
+//                }
+//                items(items) { element ->
+//                    ItemInJournalList(element)
+//                }
+//            }
+//
+//        }
+//    }
 
 
 }
+
+@Composable
+fun LegacyFragmentContainer(fragmentManager: FragmentManager) {
+    AndroidView(factory = { context ->
+        FragmentContainerView(context).apply {
+            id = View.generateViewId() // unique ID is required
+            // Add the fragment to this container
+            fragmentManager.beginTransaction()
+                .replace(id, AudioListFragment()) // Replace with your Fragment instance
+                .commit()
+        }
+    })
+}
+
+
+
 
 @Composable
 fun ItemInJournalList(item: JournalItem) {
@@ -256,3 +308,4 @@ enum class TextStatus(
     ERROR("error")
 
 }
+
