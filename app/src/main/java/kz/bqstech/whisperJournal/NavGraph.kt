@@ -13,6 +13,8 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import kotlinx.serialization.Serializable
+import kz.bqstech.whisperJournal.ui.audioList.SearchBarJournalScreen
+import kz.bqstech.whisperJournal.ui.home.HomeScreen
 
 @Composable
 fun MainNavGraph() {

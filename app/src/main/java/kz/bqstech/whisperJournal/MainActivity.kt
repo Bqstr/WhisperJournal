@@ -2,7 +2,6 @@ package kz.bqstech.whisperJournal
 
 import android.os.Bundle
 import android.util.Log
-import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -20,7 +19,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -70,6 +68,10 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
+
+
+
+
     }
 }
 
@@ -165,3 +167,33 @@ fun MainTopbar() {
         Text(color =Color.Black,text="Whisper Journal",modifier =Modifier.align(Alignment.Center),fontSize =18.sp, lineHeight = 23.sp, fontFamily = baldFontWorkSans)
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

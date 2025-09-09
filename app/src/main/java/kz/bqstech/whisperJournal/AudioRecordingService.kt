@@ -14,10 +14,15 @@ import androidx.core.app.NotificationCompat
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
+import kz.bqstech.whisperJournal.data.remote.JournalRequestItem
+import kz.bqstech.whisperJournal.repository.AudiosRepository
+import org.koin.android.ext.android.inject
 import java.io.File
-const val RECORDING_STATE_CHANGED ="RECORDING_STATE_CHANGED"
-const val RECORDING_EXTRA ="isRecording"
+
+const val RECORDING_STATE_CHANGED = "RECORDING_STATE_CHANGED"
+const val RECORDING_EXTRA = "isRecording"
 
 
 class AudioRecordingService : Service() {
@@ -29,12 +34,16 @@ class AudioRecordingService : Service() {
     private val NOTIFICATION_SERVICE = "notification_service"
     private val timer: Int? = null
 
+    private val serviceScope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
+    private val audioRepo: AudiosRepository by inject()
+
+
     override fun onCreate() {
         super.onCreate()
         startForeground(1, createNotification())
     }
 
-    private fun notifyUIRecordingStarted(value:Boolean) {
+    private fun notifyUIRecordingStarted(value: Boolean) {
         val intent = Intent(RECORDING_STATE_CHANGED)
         intent.putExtra(RECORDING_EXTRA, value)
         sendBroadcast(intent)
@@ -57,12 +66,32 @@ class AudioRecordingService : Service() {
         return START_NOT_STICKY
     }
 
-    override fun onDestroy() {
 
+    fun stopRecording(): File? {
         mediaRecorder?.apply {
             stop()
             release()
         }
+        mediaRecorder = null
+
+        serviceScope.launch {
+            audioRepo.addTestAudio(
+                JournalRequestItem(
+                    audio = outputFile,
+                    name = "",
+                    time = ""
+                )
+            )
+        }
+
+        return outputFile
+    }
+
+
+    override fun onDestroy() {
+
+
+        stopRecording()
     }
 
     override fun onBind(intent: Intent?): IBinder? = null
@@ -102,7 +131,7 @@ class AudioRecordingService : Service() {
                     .setContentText("Recording for $timeFormatted")
                     .setSmallIcon(R.drawable.mic_image)
                     .build()
-            notificationManager.notify(1,notification)
+            notificationManager.notify(1, notification)
         }
 
 
@@ -112,10 +141,6 @@ class AudioRecordingService : Service() {
         val fileName = "audio_${System.currentTimeMillis()}.3gp"
         return File(getExternalFilesDir(Environment.DIRECTORY_MUSIC), fileName)
     }
-
-
-
-
 
 
 }

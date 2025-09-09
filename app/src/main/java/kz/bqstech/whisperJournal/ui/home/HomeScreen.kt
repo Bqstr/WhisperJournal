@@ -1,4 +1,4 @@
-package kz.bqstech.whisperJournal
+package kz.bqstech.whisperJournal.ui.home
 
 import android.content.BroadcastReceiver
 import android.content.Context
@@ -7,7 +7,6 @@ import android.content.IntentFilter
 import android.os.Environment
 import android.util.Log
 import androidx.compose.animation.AnimatedContent
-import androidx.compose.animation.Crossfade
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.animateFloatAsState
@@ -17,8 +16,6 @@ import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.with
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -27,12 +24,10 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
@@ -45,25 +40,24 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawWithCache
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.asComposePath
-import androidx.compose.ui.input.pointer.pointerInput
-import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
 import androidx.navigation.NavHostController
-import androidx.xr.compose.testing.toDp
-import kotlinx.serialization.json.Json.Default.configuration
 import org.koin.androidx.compose.koinViewModel
 import kotlin.math.roundToInt
 import androidx.compose.ui.platform.LocalConfiguration
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.graphics.shapes.CornerRounding
 import androidx.graphics.shapes.RoundedPolygon
 import androidx.graphics.shapes.toPath
-import com.google.android.material.shape.TriangleEdgeTreatment
+import kz.bqstech.whisperJournal.AudioRecordingService
+import kz.bqstech.whisperJournal.HomeViewModel
+import kz.bqstech.whisperJournal.R
+import kz.bqstech.whisperJournal.RECORDING_EXTRA
+import kz.bqstech.whisperJournal.RECORDING_STATE_CHANGED
 import kz.bqstech.whisperJournal.util.Space
 import kz.bqstech.whisperJournal.util.noRippleClick
 
@@ -97,6 +91,7 @@ fun HomeScreen(
         val mediaFiles = musicDir?.listFiles()?.filter { it.extension == "3gp" } ?: emptyList()
         Log.d("asdfasdffrfrfrf",mediaFiles.toString())
     }
+
 
 
 
@@ -155,6 +150,7 @@ fun HomeScreen(
     val configuration = LocalConfiguration.current
     val screenWidthDp = configuration.screenWidthDp
     val viewModel: HomeViewModel = koinViewModel()
+    viewModel.test()
         Box(
             Modifier
                 .fillMaxSize()

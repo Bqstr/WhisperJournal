@@ -1,11 +1,7 @@
-package kz.bqstech.whisperJournal
+package kz.bqstech.whisperJournal.ui.audioList
 
-import android.app.ListFragment
 import android.util.Log
 import android.view.View
-import android.widget.FrameLayout
-import android.widget.LinearLayout
-import androidx.activity.ComponentActivity
 import androidx.activity.compose.LocalActivity
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.background
@@ -16,39 +12,27 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
-import androidx.compose.material3.contentColorFor
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.fragment.app.FragmentContainerView
 import androidx.fragment.app.FragmentManager
+import kz.bqstech.whisperJournal.R
+import kz.bqstech.whisperJournal.data.remote.JournalResponseItem
 import kz.bqstech.whisperJournal.ui.theme.Fonts.baldFontWorkSans
 import kz.bqstech.whisperJournal.ui.theme.Fonts.mediumWorkSans
 import kz.bqstech.whisperJournal.ui.theme.Fonts.regularWorkSans
-import kz.bqstech.whisperJournal.ui.theme.GrayText
 import kz.bqstech.whisperJournal.util.Space
 
 
@@ -56,12 +40,12 @@ import kz.bqstech.whisperJournal.util.Space
 @Composable
 fun SearchBarJournalScreen(
 ) {
-    Log.d("asdfafasdfasdf","1")
+    Log.d("asdfafasdfasdf", "1")
 
 //    val viewModel : JournalListViewModel = koinViewModel()
 //    val state by viewModel.state.collectAsState()
 
-    Log.d("asdfafasdfasdf","2")
+    Log.d("asdfafasdfasdf", "2")
 
     val activity = LocalActivity.current as AppCompatActivity
     val fragmentManager = activity.supportFragmentManager // native fragments
@@ -70,11 +54,11 @@ fun SearchBarJournalScreen(
 
 
 
-    Log.d("asdfafasdfasdf",fragmentManager.toString())
+    Log.d("asdfafasdfasdf", fragmentManager.toString())
 
 
-    Log.d("asdfafasdfasdf","sadf")
-    AndroidView(factory = {context ->
+    Log.d("asdfafasdfasdf", "sadf")
+    AndroidView(factory = { context ->
         FragmentContainerView(context).apply {
             id = View.generateViewId() // unique ID is required
             // Add the fragment to this container
@@ -82,8 +66,7 @@ fun SearchBarJournalScreen(
                 .replace(id, AudioListFragment()) // Replace with your Fragment instance
                 .commit()
         }
-    },modifier =Modifier.fillMaxSize())
-
+    }, modifier = Modifier.fillMaxSize())
 
 
 //    Column(Modifier.fillMaxSize().background(MaterialTheme.colorScheme.background)) {
@@ -179,10 +162,8 @@ fun LegacyFragmentContainer(fragmentManager: FragmentManager) {
 }
 
 
-
-
 @Composable
-fun ItemInJournalList(item: JournalItem) {
+fun ItemInJournalList(item: JournalUiItem) {
     Row(
         Modifier
             .fillMaxWidth()
@@ -291,14 +272,30 @@ fun DateInJournalList(date: String) {
     }
 }
 
-data class JournalItem(
+data class JournalUiItem(
     val id: Int,
     val name: String?,
     val text: String?,
     val time: String,
     val duration: String,
-    val textStatus: TextStatus
-)
+    val textStatus: TextStatus,
+    val date: String,
+    val audioUri: String
+
+) {
+//    (fun JournalUiItem.toResponseItem(): JournalResponseItem {
+//        return JournalResponseItem(
+//            id = this.id,
+//            name = this.name ?: "",
+//            trascription = text ?: "",
+//            uploadedAt = this.time,
+//            transcription_status = this.textStatus,
+//            duration = this.duration,
+//            date = this.date,
+//            audioUri = this.audioUri
+//        )
+//    })
+}
 
 enum class TextStatus(
     val status: String
@@ -307,5 +304,31 @@ enum class TextStatus(
     IN_PROCESS("in_process"),
     ERROR("error")
 
+}
+
+fun TextStatusToString(textStatus: TextStatus): String {
+    return when (textStatus) {
+        TextStatus.READY -> {
+            "ready"
+        }
+
+        TextStatus.ERROR -> {
+            "error"
+        }
+
+        TextStatus.IN_PROCESS -> {
+            "in_process"
+        }
+
+    }
+}
+
+fun StringToTextStatus(text: String): TextStatus? {
+    return when (text) {
+        "ready" -> TextStatus.READY
+        "error" -> TextStatus.ERROR
+        "in_process" -> TextStatus.IN_PROCESS
+        else ->null
+    }
 }
 

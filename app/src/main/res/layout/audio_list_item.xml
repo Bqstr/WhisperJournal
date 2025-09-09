@@ -13,6 +13,7 @@
         android:layout_height="wrap_content"/>
     <!-- Left Icon Box -->
     <FrameLayout
+        android:id="@+id/mic_icon"
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:background="@drawable/bg_rounded_8"

@@ -5,6 +5,7 @@ plugins {
     alias(libs.plugins.jetbrains.kotlin.android)
     alias(libs.plugins.compose.compiler)
     alias(libs.plugins.kotlin.serialization)
+    id("kotlin-parcelize")   // ✅ Add this line
 }
 
 android {
@@ -42,7 +43,7 @@ android {
     }
     buildFeatures {
         compose = true
-        viewBinding =true
+        viewBinding = true
     }
     composeOptions {
         kotlinCompilerExtensionVersion = "1.5.15"
@@ -124,7 +125,20 @@ dependencies {
     //Kotlin Serialization
     implementation(libs.kotlinx.serialization.json)
 
-    implementation ("com.google.android.material:material:1.12.0")
+    implementation("com.google.android.material:material:1.12.0")
+
+    implementation("com.squareup.retrofit2:retrofit:3.0.0")
+// latest stable (use 3.x when it’s stable)
+// Converter for JSON (Gson)
+    implementation("com.squareup.retrofit2:converter-gson:3.0.0")
+// (Optional) For logging network requests
+    implementation("com.squareup.okhttp3:logging-interceptor:5.1.0")
+
+    implementation("androidx.media3:media3-exoplayer:1.8.0")
+    implementation("androidx.media3:media3-exoplayer-dash:1.8.0")
+    implementation("androidx.media3:media3-ui:1.8.0")
+    implementation("androidx.media3:media3-ui-compose:1.8.0")
+
 
 
 }
